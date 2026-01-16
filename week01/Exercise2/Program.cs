@@ -4,62 +4,19 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Ask the user for their grade percentage.
         Console.Write("Enter your grade percentage: ");
-        int grade = int.Parse(Console.ReadLine());
 
-        // Determine the letter grade
-        string letter;
-
-        if (grade >= 90)
+        if (!int.TryParse(Console.ReadLine(), out int grade))
         {
-            letter = "A";
-        }
-        else if (grade >= 80)
-        {
-            letter = "B";
-        }
-        else if (grade >= 70)
-        {
-            letter = "C";
-        }
-        else if (grade >= 60)
-        {
-            letter = "D";
-        }
-        else
-        {
-            letter = "F";
+            Console.WriteLine("Invalid input. Please enter a number.");
+            return;
         }
 
-        // Determine + or - sign
-        string sign = "";
-        int lastDigit = grade % 10;
+        string letter = GetLetterGrade(grade);
+        string sign = GetGradeSign(grade, letter);
 
-        if (lastDigit >= 7)
-        {
-            sign = "+";
-        }
-        else if (lastDigit < 3)
-        {
-            sign = "-";
-        }
-
-        // Handle special cases (no A+, F+, or F-)
-        if (letter == "A" && sign == "+")
-        {
-            sign = "";
-        }
-
-        if (letter == "F")
-        {
-            sign = "";
-        }
-
-        // Display the letter grade
         Console.WriteLine($"Your letter grade is {letter}{sign}");
 
-        // Determine pass or fail
         if (grade >= 70)
         {
             Console.WriteLine("Congratulations! You passed the course.");
@@ -68,5 +25,44 @@ class Program
         {
             Console.WriteLine("Don't give up! Keep trying and you'll do better next time.");
         }
+    }
+
+    static string GetLetterGrade(int grade)
+    {
+        switch (grade / 10)
+        {
+            case 10:
+            case 9:
+                return "A";
+            case 8:
+                return "B";
+            case 7:
+                return "C";
+            case 6:
+                return "D";
+            default:
+                return "F";
+        }
+    }
+
+    static string GetGradeSign(int grade, string letter)
+    {
+        if (letter == "F")
+        {
+            return "";
+        }
+
+        int lastDigit = grade % 10;
+
+        if (lastDigit >= 7 && letter != "A")
+        {
+            return "+";
+        }
+        else if (lastDigit < 3)
+        {
+            return "-";
+        }
+
+        return "";
     }
 }
