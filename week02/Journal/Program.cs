@@ -59,9 +59,5 @@ class Program
                     break;
             }
         }
-
-        // EXCEEDING REQUIREMENTS:
-        // - Random prompt generator
-        // - Clean abstraction with multiple classes
     }
 }
